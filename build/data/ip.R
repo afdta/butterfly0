@@ -10,6 +10,8 @@ load("/home/alec/Projects/Brookings/black-cities/build/data/ButterflyData01.RDat
 # none have 
 # twonames$NAMES[[1]]$NAME
 
+#WHY DUPLICATES IN 1970?
+
 one <- ts[1, ]
 length(one$NAMES)
 
@@ -24,6 +26,56 @@ ts$name2 <- sapply(ts$NAMES, function(tbl){
 })
 
 range((ts$WHITE + ts$BLACK + ts$OTHER) - ts$TOTAL)
+
+#function to run regression of y on x, returning just estimated coefficient on x 
+reg_e <- function(y,x){
+  beta <- NA
+  tryCatch({
+      mod <- lm(y ~ x, na.action = na.exclude)
+      beta <- mod$coefficients[2]
+    },
+    error = function(msg){
+      #print out errors to console
+      cat("!!! ERROR !!!")
+      cat("  >>> ")
+      cat(paste0(y, ",", x, collapse = " | "))
+      cat("\n\n\n")
+    }
+  )
+  return(beta)
+}
+
+#regress log(pop) on year, excluding observations with zero pop  
+regressions <- ts %>% select(fp=STPLFIPS, nm=name, BLACK, WHITE, name, YEAR) %>%
+                      mutate(lnb=ifelse(BLACK==0, NA, log(BLACK)),
+                             lnw=ifelse(WHITE==0, NA, log(WHITE))) %>% 
+                      group_by(fp, nm) %>% 
+                      summarise(blnb = reg_e(lnb, YEAR), blnw = reg_e(lnw, YEAR))
+
+#tack on regression coefficients to original data
+#TODO figure out why there are dupes in data
+all <- ts %>% select(fp=STPLFIPS, cb=CBSA, nm=name, spw=mylog10.slopeW, spb=mylog10.slopeB, qd=quadrant, cl=cityclass, ds=distPrincipal, rg=REGIONFP) %>% 
+              unique() %>% inner_join(regressions, by=c("fp","nm"))
+
+
+#wide pop data frame
+pops <- ts %>% ungroup() %>% select(fp=STPLFIPS, b=BLACK, w=WHITE, o=OTHER, yr=YEAR) %>% gather(key="race", value="pop", b, w, o) %>% 
+              mutate(raceyr=paste0(race,substr(yr,3,4))) %>% filter(!duplicated(.[c("yr","fp","race")])) %>% select("fp","raceyr","pop") %>% spread("raceyr", "pop")  
+
+final <- inner_join(all, pops, by="fp")
+                            
+json <- c("var chart_data = ", toJSON(final, na="null"), ";", "export default chart_data;")
+
+writeLines(json, "/home/alec/Projects/Brookings/black-cities/build/js/data.js")
+
+
+
+##SCRAP / OLD CODE BELOW
+
+dups <- all[which(duplicated(all$STPLFIPS)), ]
+dups2 <- regressions[which(duplicated(regressions$STPLFIPS)), ]
+
+# testing <- ts %>% select("YEAR", "name", "slopeB", "mylog10.slopeB") %>% mutate(log=log10(slopeB)) %>% ggplot() + geom_histogram(aes(x=log))
 
 
 #WHAT'S GOING ON HERE WITH THESE DUPLICATES

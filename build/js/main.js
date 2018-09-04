@@ -1,7 +1,7 @@
 import dir from "../../../js-modules/rackspace.js";
 import degradation from "../../../js-modules/degradation.js";
 
-import wind_map from './wind-map.js';
+import butterfly_chart from './butterfly-chart.js';
 
 
 //main function
@@ -24,9 +24,16 @@ function main(){
   if(compat.browser()){
     //run app...
     var main_wrap = d3.select("#metro-interactive");
-    var map_wrap = main_wrap.append("div");
+    
+    var chart_wrap = main_wrap.append("div");
+    chart_wrap.append("p").text("CHART")
 
-    wind_map(map_wrap.node(), 3000, 2000);
+    var update_chart = butterfly_chart(chart_wrap.node());
+
+    update_chart();
+
+  
+    //wind_map(map_wrap.node(), 3000, 2000);
   }
 
 
