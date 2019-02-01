@@ -1,0 +1,32 @@
+STPLFIPS,city code
+REGION,"1 = Northeast, 2 = Midwest, 3 = Southeast, 4 = West"
+CBSA,metropolitan area code
+top100,"1 = located in a top 100 metro area, 0 = not"
+LAT,latitude of city centroid
+LONG,laongitude of city centroid
+cityclass,"1 = Principal city of a metro area, 2 = ring city of a metro area, 3 = principal city of a micro area, 4 = ring city of a micro area, 5 = not in any metro or micro area"
+distPrincipal,"if in a metro/micro area, distance from city centroid to the centroid of the principal city of the metro/micro"
+slopeNONB,slope of the best-fit line for the city's non-black population 1970-2010
+slopeW,slope of the best-fit line for the city's white population 1970-2010
+slopeB,slope of the best-fit line for the city's black population 1970-2010
+R2slopeNONB,R^2 value of the best-fit line for the city's non-black population 1970-2010
+R2slopeW,R^2 value of the best-fit line for the city's white population 1970-2010
+R2slopeB,R^2 value of the best-fit line for the city's black population 1970-2010
+p.slopeNONB,p-value of the best-fit line for the city's non-black population 1970-2010
+p.slopeW,p-value of the best-fit line for the city's white population 1970-2010
+p.slopeB,p-value of the best-fit line for the city's black population 1970-2010
+slopePCTB,slope of the best-fit line for the city's black share of population 1970-2010
+R2slopePCTB,R^2 value of the best-fit line for the city's black share of population 1970-2010
+p.slopePCTB,p-value of the best-fit line for the city's black share of population 1970-2010
+mylog10.slopeNONB,"log (base10) of slopeNONB. If slopeNONB is initially between -1 and 1, no change."
+mylog10.slopeW,"log (base10) of slopeW. If slopeW is initially between -1 and 1, no change."
+mylog10.slopeB,"log (base10) of slopeNONB. If slopeB is initially between -1 and 1, no change."
+quadrantNONB,"Based on NONB values. 1 = falls in top-right quadrant of the plot, 2 = falls in top-left, 3 = falls in bottom-left, 4 = falls in bottom-right"
+quadrantW,"Based on WHITE values. 1 = falls in top-right quadrant of the plot, 2 = falls in top-left, 3 = falls in bottom-left, 4 = falls in bottom-right"
+Y1970,"TRUE = city was majority-black in 1970, FALSE = not"
+Y1980,"TRUE = city was majority-black in 1980, FALSE = not"
+Y1990,"TRUE = city was majority-black in 1900, FALSE = not"
+Y2000,"TRUE = city was majority-black in 2000, FALSE = not"
+Y2010,"TRUE = city was majority-black in 2010, FALSE = not"
+TOTAL2010,Total population at last decennial census in 2010
+cbsatitle,"the name of the metropolitan area the city falls within, if any"
