@@ -32,8 +32,6 @@ function main(){
 
     update_chart();
 
-  
-    //wind_map(map_wrap.node(), 3000, 2000);
   }
 
 
