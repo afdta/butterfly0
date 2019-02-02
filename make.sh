@@ -11,6 +11,8 @@ cat /home/alec/.local/lib/node/lib/node_modules/d3/dist/d3.min.js \
 ./build/.newline.txt \
 /home/alec/.local/lib/node/lib/node_modules/topojson/dist/topojson.min.js \
 ./build/.newline.txt \
+/home/alec/Projects/Brookings/black-cities/build/js/d3-hexbin/d3-hexbin.min.js \
+./build/.newline.txt \
 ./build/tmp.js > app.js
 
 #remove unnecessary files
