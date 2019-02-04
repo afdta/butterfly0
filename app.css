@@ -1,0 +1,67 @@
+.metro-interactive div{
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing: border-box;
+}
+
+.metro-interactive .side-by-side{
+    margin:2rem auto;
+    min-width:320px;
+    max-width:1200px;
+}
+
+.metro-interactive .side-by-side:after,
+.metro-interactive .c-fix:after,
+.metro-interactive .clearfix:after{
+    content:"";
+    display:table;
+    clear:both;
+}
+
+.metro-interactive .side-by-side > div:first-child{
+    width:33%;
+    padding:0px 0px 0px 20px;
+    float:right;
+}
+
+.metro-interactive .side-by-side > div{
+    width:66%;
+    padding:0px;
+    float:left;
+}
+
+.metro-interactive .side-by-side > div > p:first-child strong{
+    font-size:1.2em;
+}
+
+.metro-interactive .chart-axis path,
+.metro-interactive .chart-axis line{
+    stroke:#999999;
+}
+
+.metro-interactive .reading{
+    line-height:1.7em;
+}
+
+@media (min-width:0px){
+    .metro-interactive .side-by-side > div:first-child,
+    .metro-interactive .side-by-side > div{
+        width:auto;
+        padding:0px;
+        float:none;
+    }
+}
+
+@media (min-width:780px){
+    .metro-interactive .side-by-side > div:first-child{
+        width:33%;
+        padding:0px 0px 0px 20px;
+        float:right;
+    }
+    
+    .metro-interactive .side-by-side > div{
+        width:66%;
+        padding:0px;
+        float:left;
+    }
+}

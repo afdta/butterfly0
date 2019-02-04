@@ -10,28 +10,27 @@
 </head>
 
 <body>
-<div id="metro-interactive">
-  <h1 style="margin:0rem;">Change in the black share of the population, 1970 to 2010</h1>
-  <div style="max-width:900px;">
-    <p style="margin:0rem 0rem 1rem 0rem;"><em>6,000+ cities</em></p>
-    <p style="border-bottom:1px solid #aaaaaa;"><strong>How to read this</strong><br/><em>(Sorry, legends are tedious to create and I don't want to burn time on that if we go in a different direction)</em></p>
-    <p>Line angle indicates change in black share:</p>
-    <ol>
-      <li>Vertical, pointed UP: <strong>30+ percentage point increase in black share</strong></li>
-      <li>Horizontal/flat: No change in black share</li>
-      <li>Vertical, pointed DOWN: <strong>30+ percentage point decrease in black share</strong></li>
-      <li>E.g. +/-45 degree line is +/- 15 percentage point decrease, and so on</li>
-    </ol>
-    <p>Line and dot color indicates <span style="color:#08519c;font-weight:bold;">gain</span> / <span style="color:#a63603;font-weight:bold;";>loss</span> in black population share</p>
-    <p>Dot size corresponds with total population in 2010</p>
+  <div class="metro-interactive">
 
-    <p style="border-bottom:1px solid #aaaaaa;">Notes</p>
-    <p>This is very much a draft, though I think it is the best of my early sketches. It doesn't directly depict shifts in the white population, though that is represented implicitely (e.g. if the black share increases, the non-black share decreases, and vice versa).</p>
-    <p>I think this representation shows promise. The challenge is that there's a lot of information to convey. E.g. this map doesn't depict the absolute size (25 pct. pt. change in a small city is the same here, visually, as 25 pct. pt. change in a big city) or the direction of population shifts (e.g. increasing/decreasing population), so it doesn't provide those nuances. We could provide additional filters that the user could "play with" or we could change the map as the narrative on the site proceeds (like <a href="https://www.nytimes.com/interactive/2016/11/08/us/elections/how-trump-pushed-the-election-map-to-the-right.html">this</a>)</p>
-    <p>We don't have to do this as a map. Depending on the findings, a chart like the "butterfly" plot you shared (which I really like!) might be the best way to do this.</p>
+    <p>Next steps: pass filters as arguments. Stamp out additional sections filtering by region, what else? Stamp out a "reading the charts" panel with quadrants anntated</p>
+    <p>Additional major features. Search with dropdown. Highlight a place along with tooltip (time permitting on the amount of detail here)</p>
+
+    <div class="side-by-side">
+
+      <div class="reading">
+        <p><strong>Header of section [for reference this is 150 words below]</strong></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae enim id ipsum mattis tincidunt. Sed facilisis elementum leo sit amet volutpat. Sed vulputate orci a turpis iaculis, eget consequat turpis vehicula. Nulla at molestie tortor. Nunc sed dui imperdiet, faucibus metus ut, egestas odio. Mauris sit amet iaculis augue. Sed ut tempus est, non mattis tortor. Etiam porta justo vitae ante convallis porttitor. Aliquam in dolor ex. Cras vel elit sit amet mauris commodo consequat. Sed condimentum tortor ac nisi aliquam viverra vitae id nunc. Sed eget efficitur elit, a cursus sapien. Praesent semper consequat congue. Maecenas aliquet ornare pharetra. Praesent quis finibus diam. Morbi tempor iaculis rutrum.</p>
+        <p>Sed ac velit sed nisi ultrices finibus. Maecenas ornare elementum nisl non sollicitudin. Donec id malesuada libero. Sed pretium rutrum massa, vitae consequat nisl commodo eu. Sed dictum non ligula a mattis. Duis accumsan sem in diam bibendum, vel ullamcorper diam.</p>
+      </div>
+
+      <div>
+          <p><strong>Magnitudes of population change: black versus non-black population in XXX places</strong></p>
+          <div id="butterfly-chart0"></div>
+        </div>
+
+    </div>
+
   </div>
-  
 
-</div>
 </body>
 </html>

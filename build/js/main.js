@@ -23,10 +23,10 @@ function main(){
   //browser degradation
   if(compat.browser()){
     //run app...
-    var main_wrap = d3.select("#metro-interactive");
+    var main_wrap = d3.select("#butterfly-chart0");
     
     var chart_wrap = main_wrap.append("div");
-    chart_wrap.append("p").text("CHART")
+
 
     var update_chart = butterfly_chart(chart_wrap.node());
 
