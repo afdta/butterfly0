@@ -1,8 +1,11 @@
 import all_data from './data.js';
 
 //import slider_filter from "../../../js-modules/slider-filter.js";
+//filter looks like: {prop:"variable name", bounds:[min, max] | [exact_value]}
+// test is x >= min, x < max if bounds.length == 2, otherwise if length == 1 it is a test of equality
+// e.g. [min, max)
 
-export default function butterfly_chart(container){
+export default function butterfly_chart(container, config){
 
     var width = 700;
     var aspect = 1;
@@ -12,7 +15,30 @@ export default function butterfly_chart(container){
     var pad_bottom = 10;
     var pad_left = 45;
     var axis_width = 20;
+    if(arguments.length < 2 || config == null){
+        config = {};
+    }
 
+    var all_data_;
+    if(config.hasOwnProperty("filter")){
+        var filter_prop = config.filter.prop;
+        var bounds = config.filter.bounds;
+
+        all_data_ = all_data.filter(function(d){
+            var test;
+            var val = d[filter_prop];
+            if(bounds.length == 1){
+                test = val == bounds[0];
+            }
+            else{
+                test = val >= bounds[0] && val < bounds[1];
+            }
+            return test;
+        });
+    }
+    else{
+        all_data_ = all_data.slice(0);
+    }
 
     var outer_wrap = d3.select(container)
                  .style("overflow","visible")
@@ -40,25 +66,33 @@ export default function butterfly_chart(container){
     var g_points = g_main.append("g").style("visibility","hidden");
     var g_anno = g_main.append("g");
 
+    if(config.hasOwnProperty("label")){
+        g_main.append("text").attr("x","50%").attr("dx", pad_left/2)
+              .attr("text-anchor", "middle")
+              .attr("y",pad_top + 40).text(config.label)
+              .classed("text-overlay",true)
+              .style("font-weight","bold");
+    }
+
+    if(config.hasOwnProperty("dispatcher")){
+        var points_shown = false;
+        config.dispatcher.dispatch.on(config.dispatcher.label, function(){
+            points_shown = !points_shown;
+
+            g_points.style("visibility", points_shown ? "visible" : "hidden");
+            g_hex.style("visibility", !points_shown ? "visible" : "hidden");
+        })
+    };
 
     var quadrants = wrap.append("div").style("position","absolute").style("top","0px").style("left","0px")
-                    .style("width","100%").style("height","100%");
+                    .style("width","100%").style("height","100%").style("display","none").classed("reading text-overlay",true);
                 
-    var quads = [];
-    ([1,2,3,4]).forEach(function(d){
-        var div = quadrants.append("div")
+    var quads = quadrants.selectAll("div").data([0,1,2,3])
+                        .enter().append("div")
                         .style("position", "absolute")
-                        .style("width","50%")
-                        .style("height","50%")
-                        .style("top", d < 3 ? "0%" : "50%")
-                        .style("left", d == 1 || d ==3 ? "0%" : "50%")
                         .style("background-color","transparent")
                         .style("border","0px solid red")
-                        .style("padding","10px")
-                        ;
-
-        quads.push(div);
-    });
+                        .style("padding","10px 15px");
 
 
     //scales
@@ -73,8 +107,8 @@ export default function butterfly_chart(container){
     var g_x = g_axes.append("g").attr("transform","translate(0,"+ (pad_top) + ")");
     var g_y = g_axes.append("g").attr("transform","translate(" + (pad_left) + ",0)");
 
-    g_anno.append("text").text("Change in black population, 1970 to 2010").attr("x","100%").attr("y","10").attr("text-anchor","end").attr("dx", 0-pad_right);
-    g_anno.append("text").text("Change in non-black population, 1970 to 2010").attr("transform","rotate(-90) translate(0,15)").attr("x","-100%").attr("text-anchor","start").attr("dx", pad_bottom);
+    g_anno.append("text").text("Change in black population, 1970 to 2010").attr("x","100%").attr("y","10").attr("text-anchor","end").attr("dx", 0-pad_right).style("font-weight","bold").style("font-size","13px");
+    g_anno.append("text").text("Change in non-black population, 1970 to 2010").attr("transform","rotate(-90) translate(0,15)").attr("x","-100%").attr("text-anchor","start").attr("dx", pad_bottom).style("font-weight","bold").style("font-size","13px");
 
     var ax_x = d3.axisTop().scale(x_scale).ticks(5);
     var ax_y = d3.axisLeft().scale(y_scale).ticks(5);
@@ -101,7 +135,7 @@ export default function butterfly_chart(container){
 
     }
 
-    function draw(filter, cell_max){
+    function draw(){
 
         wrap.style("width", width+"px").style("height", height+"px");
 
@@ -130,17 +164,13 @@ export default function butterfly_chart(container){
                                                 .style("stroke",function(d){return d==0 ? "#aaaaaa" : "#dddddd"});
                                           
 
-        if(arguments.length > 0){
-            //run filter...
-        }
-
-        var pts_up = g_points.selectAll("circle").data(all_data, function(d){return d.STPLFIPS});
+        var pts_up = g_points.selectAll("circle").data(all_data_, function(d){return d.STPLFIPS});
         pts_up.exit().remove()
         var pts = pts_up.enter().append("circle").merge(pts_up)
                     .interrupt()
                     .attr("cx",function(d){return x_scale(d["mylog10.slopeNONB"])})
                     .attr("cy",function(d){return y_scale(d["mylog10.slopeB"])})
-                    .attr("r","1.5")
+                    .attr("r","2")
                     .attr("fill","#0B8814")
                     .attr("fill-opacity",0.25);
 
@@ -149,9 +179,9 @@ export default function butterfly_chart(container){
                     .extent([[10,10], [width-10, height-10]]).radius(width/200)
                     ;
 
-        var hexdat = hex(all_data);
+        var hexdat = hex(all_data_);
         
-        var max_in_cell = arguments.length > 1 ? cell_max : d3.max(hexdat, function(d){return d.length});
+        var max_in_cell = config.hasOwnProperty("cell_max") ? config.cell_max : d3.max(hexdat, function(d){return d.length});
         
         colscale.domain([1, max_in_cell]);
 
@@ -195,9 +225,19 @@ export default function butterfly_chart(container){
                 })
                 ;
         
+        quads.each(function(d,i){
+            var w = (width - pad_left - pad_right) / 2;
+            var h = (height - pad_top - pad_bottom) / 2;
+
+            d3.select(this).style("width",w+"px")
+                .style("height",h+"px")
+                .style("top", i < 2 ? pad_top+"px" : (pad_top + h)+"px")
+                .style("left", i == 0 || i == 2 ? pad_left+"px" : (pad_left + w)+"px")
+                ;
+        })
     }
 
-    function update_sequence(){
+    function update_sequence(callback){
         setTimeout(function(){
             //set dimensions
             dims();
@@ -209,6 +249,10 @@ export default function butterfly_chart(container){
 
             //set to full opacity;
             svg.style("opacity", "1");
+
+            if(typeof callback === "function"){
+                callback.call({quadrants:quads, quadrant_wrap:quadrants});
+            }
         },0)
     }
 

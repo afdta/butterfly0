@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <title>MPP Interactive Feature</title>
   <meta name="author" content="Alec Friedhoff">
-
+  <link href="https://fonts.googleapis.com/css?family=PT+Serif:400,400i,700" rel="stylesheet">
   <link rel="stylesheet" href="app.css">
   <script src="app.js" type="text/javascript"></script>
 </head>
@@ -12,8 +12,43 @@
 <body>
   <div class="metro-interactive">
 
-    <p>Next steps: pass filters as arguments. Stamp out additional sections filtering by region, what else? Stamp out a "reading the charts" panel with quadrants anntated</p>
-    <p>Additional major features. Search with dropdown. Highlight a place along with tooltip (time permitting on the amount of detail here)</p>
+
+    <div class="graphics-panel" style="border-top:none;">
+        <h1>Design #1</h1>
+        <h3>2/6/2019</h3>
+    </div>
+
+    <div class="graphics-panel" style="margin-top:2rem;">
+
+
+
+      <div style="max-width:640px">
+        <h4>Where we are</h4>
+        <ul>
+          <li>Data are processed and loaded</li>
+          <li>I've developed a basic chart template and layout</li>
+        </ul>
+
+        <h4>Next steps</h4>
+        <ul>
+          <li>Feedback on chart template</li>
+          <li>Refine language to describe the values in the chart. To be clear, it's log(average change in pop per decade)? What are the best labels for the chart axes?</li>
+          <li>Develop the story. How many of these chart panels do we need? What do they say?</li>
+        </ul>
+
+        <h4>Notes on the chart</h4>
+        <ul>
+          <li id="show-dots" style="cursor:pointer;user-select:none;">There is a lot of dot overlap if we plot dots individually. That motivated the heatmap format below. If you really want to see the dots, click here »</li>
+          <li>There are a lot of parameters to filter on. In general, I'd advocate for simplicity and I'd only filter by variables that are discussed in the text. I recommend not having user-selectable filters as I don't think the time required to enable this would pass a cost-benefit test. I think the value here is in curating views that you have researched and then explaining those views to the reader.</li>
+        </ul>
+
+
+        <h4>Next steps</h4>
+        <ul>
+          <li>Enable place search / highlighting to facilitate narratives about specific places</li>
+        </ul>
+      </div>
+    </div>
 
     <div class="side-by-side">
 
@@ -24,9 +59,47 @@
       </div>
 
       <div>
-          <p><strong>Magnitudes of population change: black versus non-black population in XXX places</strong></p>
+          <p><strong style="color:darkorange">Panel 1: Develop intuition for the data (AKA How do you read this chart?)</strong><br /><br /><strong>Magnitudes of population change: black versus non-black population in XXX places</strong></p>
           <div id="butterfly-chart0"></div>
         </div>
+
+    </div>
+
+
+    <div class="side-by-side">
+
+      <div class="reading">
+        <p><strong>Header of section [for reference this is 150 words below]</strong></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae enim id ipsum mattis tincidunt. Sed facilisis elementum leo sit amet volutpat. Sed vulputate orci a turpis iaculis, eget consequat turpis vehicula. Nulla at molestie tortor. Nunc sed dui imperdiet, faucibus metus ut, egestas odio. Mauris sit amet iaculis augue. Sed ut tempus est, non mattis tortor. Etiam porta justo vitae ante convallis porttitor. Aliquam in dolor ex. Cras vel elit sit amet mauris commodo consequat. Sed condimentum tortor ac nisi aliquam viverra vitae id nunc. Sed eget efficitur elit, a cursus sapien. Praesent semper consequat congue. Maecenas aliquet ornare pharetra. Praesent quis finibus diam. Morbi tempor iaculis rutrum.</p>
+        <p>Sed ac velit sed nisi ultrices finibus. Maecenas ornare elementum nisl non sollicitudin. Donec id malesuada libero. Sed pretium rutrum massa, vitae consequat nisl commodo eu. Sed dictum non ligula a mattis. Duis accumsan sem in diam bibendum, vel ullamcorper diam.</p>
+      </div>
+
+      <div>
+          <p><strong style="color:darkorange">Panel 2: Describe the big picture</strong><br /><br /><strong>Magnitudes of population change: black versus non-black population in XXX places</strong></p>
+          <div id="butterfly-chart1"></div>
+        </div>
+
+    </div>
+
+
+    <div class="graphics-panel">
+
+      <div class="reading" style="max-width:640px;">
+        <p><strong>Here we turn to some cuts of the data... First by... Region?</strong></p>
+        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam vitae enim id ipsum mattis tincidunt. Sed facilisis elementum leo sit amet volutpat. Sed vulputate orci a turpis iaculis, eget consequat turpis vehicula. Nulla at molestie tortor. Nunc sed dui imperdiet, faucibus metus ut, egestas odio. Mauris sit amet iaculis augue. Sed ut tempus est, non mattis tortor. Etiam porta justo vitae ante convallis porttitor. Aliquam in dolor ex. Cras vel elit sit amet mauris commodo consequat. Sed condimentum tortor ac nisi aliquam viverra vitae id nunc. Sed eget efficitur elit, a cursus sapien. Praesent semper consequat congue. Maecenas aliquet ornare pharetra. Praesent quis finibus diam. Morbi tempor iaculis rutrum.</p>
+        <p>Sed ac velit sed nisi ultrices finibus. Maecenas ornare elementum nisl non sollicitudin. Donec id malesuada libero. Sed pretium rutrum massa, vitae consequat nisl commodo eu. Sed dictum non ligula a mattis. Duis accumsan sem in diam bibendum, vel ullamcorper diam.</p>
+      </div>
+
+      <div>
+          <p style="margin-top:2rem;"><strong style="color:darkorange">Panel 3: Trends by region</strong><br /><br /><strong>Magnitudes of population change by region of the country</strong></p>
+          <div class="mi-grid">
+              <div id="butterfly-chart2"></div>
+              <div id="butterfly-chart3"></div>
+              <div id="butterfly-chart4"></div>
+              <div id="butterfly-chart5"></div>
+          </div>
+          
+      </div>
 
     </div>
 
